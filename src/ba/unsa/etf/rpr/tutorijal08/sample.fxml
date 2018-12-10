@@ -6,12 +6,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="ba.unsa.etf.rpr.tutorijal08.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ba.unsa.etf.rpr.tutorijal08.Controller">
    <children>
-      <ListView fx:id="list" layoutX="14.0" layoutY="44.0" prefHeight="345.0" prefWidth="573.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Uzorak:" />
       <TextField fx:id="unos" layoutX="60.0" layoutY="10.0" />
-      <Button fx:id="searchBtn" layoutX="222.0" layoutY="10.0" mnemonicParsing="false" text="Traži" onAction="#trazi"/>
+      <Button fx:id="searchBtn" layoutX="222.0" layoutY="10.0" mnemonicParsing="false" onAction="#trazi" text="Traži" />
+      <ListView fx:id="list" editable="true" layoutX="14.0" layoutY="44.0" prefHeight="345.0" prefWidth="573.0" />
    </children>
 </Pane>

@@ -1,7 +1,10 @@
 package ba.unsa.etf.rpr.tutorijal08;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.io.File;
@@ -9,9 +12,15 @@ import java.io.File;
 
 public class Controller {
     public TextField unos;
+    public ListView<String> list = new ListView<String>();
+    ObservableList<String> items =FXCollections.observableArrayList ();
+
 
     public void trazi(ActionEvent actionEvent){
-        walk("C:\\");
+
+        walk("C:\\Users\\Mirna\\Desktop\\");
+
+        list.setItems(items);
     }
 
     public void walk(String path){
@@ -24,8 +33,13 @@ public class Controller {
             }
             else{
                 String s=f.getAbsoluteFile().toString();
-                if(s.contains(unos.getText())) System.out.println(s);
+                if(s.contains(unos.getText())){
+                   items.add(s);
+
+                   System.out.println(s);
+                }
             }
         }
+
     }
 }
