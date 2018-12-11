@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -18,13 +19,15 @@ public class Controller{
     public TextField unos;
     public ListView<String> list = new ListView<String>();
     public ProgressIndicator progressInd=new ProgressIndicator();
-    public
+    public Button stopBtn= new Button();
+    public Button searchBtn=new Button();
+    private boolean stop=false;
     ObservableList<String> items =FXCollections.observableArrayList ();
 
-    public Controller() {
+   /* public Controller() {
         this.unos = unos;
         progressInd.setVisible(false);
-    }
+    }*/
 
 
    /* Task<ObservableList<String>> task=new Task<ObservableList<String>>(){
@@ -36,20 +39,25 @@ public class Controller{
 
 
     public void trazi(ActionEvent actionEvent){
-
+            stop=false;
         new Thread(()->{
-            progressInd.setVisible(true);
+            while(!stop) {
+                progressInd.setVisible(true);
+                stopBtn.setDisable(false);
+                searchBtn.setDisable(true);
+                if (!list.getItems().isEmpty()) {
+                    Platform.runLater(() -> list.getItems().clear());
 
-            if(!list.getItems().isEmpty()){
-                Platform.runLater(()-> list.getItems().clear());
-
+                }
+                // walk("C:\\Users", unos.getText());
+                walk(System.getProperty("user.home"), unos.getText());
+                Platform.runLater(() -> list.setItems(items));
+                progressInd.setVisible(false);
+                searchBtn.setDisable(false);
+                stopBtn.setDisable(true);
             }
-           // walk("C:\\Users", unos.getText());
-
-            walk(System.getProperty("user.home"), unos.getText());
-            Platform.runLater(()->list.setItems(items));
-            progressInd.setVisible(false);
         }).start();
+
 
     }
 
@@ -73,5 +81,6 @@ public class Controller{
     }
 
     public void stop(ActionEvent actionEvent) {
+        stop=true;
     }
 }
