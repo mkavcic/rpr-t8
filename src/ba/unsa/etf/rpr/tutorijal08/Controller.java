@@ -7,9 +7,10 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.application.Platform;
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
+
 
 
 public class Controller{
@@ -17,42 +18,38 @@ public class Controller{
     public ListView<String> list = new ListView<String>();
     ObservableList<String> items =FXCollections.observableArrayList ();
 
-    Task<ObservableList<String>> task=new Task<ObservableList<String>>(){
+   /* Task<ObservableList<String>> task=new Task<ObservableList<String>>(){
         @Override protected ObservableList<String> call(){
-            walk("C:\\Users\\Mirna\\");
+            walk("C:\\Users", unos.getText());
             return items;
         }
-    };
+    };*/
 
 
     public void trazi(ActionEvent actionEvent){
 
-       // ExecutorService.submit(task);
-
-       // walk("C:\\Users\\Mirna\\Desktop\\");
-        Thread th = new Thread(task);
-
-        th.setDaemon(true);
-
-        th.start();
-
-        list.setItems(items);
+        new Thread(()->{
+            if(!list.getItems().isEmpty()){
+                Platform.runLater(()-> list.getItems().clear());
+            }
+            walk("C:\\Users", unos.getText());
+            Platform.runLater(()->list.setItems(items));
+        }).start();
     }
 
-    public void walk(String path){
+    public void walk(String path, String uzorak){
         File root = new File(path);
         File[] lista=root.listFiles();
-        if(list==null) return;
+        if(lista==null) return;
         for(File f:lista){
             if(f.isDirectory()){
-                walk(f.getAbsolutePath());
+                walk(f.getAbsolutePath(), uzorak);
             }
             else{
                 String s=f.getAbsoluteFile().toString();
-                if(s.contains(unos.getText())){
-                   items.add(s);
-                    list.setItems(items);
-                  // System.out.println(s);
+                if(s.contains(uzorak)){
+                   Platform.runLater(() -> items.add(s));
+                  //  System.out.println("File:" + s);
                 }
             }
         }
