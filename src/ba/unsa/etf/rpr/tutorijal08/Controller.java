@@ -3,14 +3,16 @@ package ba.unsa.etf.rpr.tutorijal08;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 
 
@@ -82,5 +84,20 @@ public class Controller{
 
     public void stop(ActionEvent actionEvent) {
         stop=true;
+    }
+
+    public void send() {
+        try {
+            FXMLLoader fxmlLoader= new FXMLLoader();
+           fxmlLoader.load(getClass().getResource("send.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+           Stage stage= new Stage();
+           stage.setScene(scene);
+           stage.setTitle("Pošalji");
+           stage.show();
+        }
+        catch(Exception e){
+
+        }
     }
 }
