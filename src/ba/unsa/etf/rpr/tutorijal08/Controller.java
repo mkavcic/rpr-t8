@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.application.Platform;
 
@@ -16,7 +17,15 @@ import java.io.File;
 public class Controller{
     public TextField unos;
     public ListView<String> list = new ListView<String>();
+    public ProgressIndicator progressInd=new ProgressIndicator();
+    public
     ObservableList<String> items =FXCollections.observableArrayList ();
+
+    public Controller() {
+        this.unos = unos;
+        progressInd.setVisible(false);
+    }
+
 
    /* Task<ObservableList<String>> task=new Task<ObservableList<String>>(){
         @Override protected ObservableList<String> call(){
@@ -29,12 +38,19 @@ public class Controller{
     public void trazi(ActionEvent actionEvent){
 
         new Thread(()->{
+            progressInd.setVisible(true);
+
             if(!list.getItems().isEmpty()){
                 Platform.runLater(()-> list.getItems().clear());
+
             }
-            walk("C:\\Users", unos.getText());
+           // walk("C:\\Users", unos.getText());
+
+            walk(System.getProperty("user.home"), unos.getText());
             Platform.runLater(()->list.setItems(items));
+            progressInd.setVisible(false);
         }).start();
+
     }
 
     public void walk(String path, String uzorak){
@@ -56,4 +72,6 @@ public class Controller{
 
     }
 
+    public void stop(ActionEvent actionEvent) {
+    }
 }
